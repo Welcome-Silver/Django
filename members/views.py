@@ -2,7 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from .models import Member
+import logging
 
+logger = logging.getLogger('myapp')
 
 def members(request):
     mymembers = Member.objects.all().values()
@@ -10,6 +12,7 @@ def members(request):
     context = {
         "mymembers": mymembers,
     }
+    print(">>> This is printed in the console")
     return HttpResponse(template.render(context, request))
 
 
@@ -23,6 +26,7 @@ def details(request, id):
 
 
 def main(request):
+    logger.info("Info: Home view loaded normally")
     template = loader.get_template("main.html")
     return HttpResponse(template.render())
 
